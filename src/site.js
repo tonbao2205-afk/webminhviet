@@ -656,7 +656,7 @@ if (revealRoot.classList.contains("mv-anim") && "IntersectionObserver" in window
     ".band-panel",
   ].join(",");
 
-  const STAGGER_MS = 80;
+  const STAGGER_MS = 56;
   const STAGGER_MAX = 6;
 
   const revealObserver = new IntersectionObserver(
