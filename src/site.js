@@ -622,12 +622,6 @@ if (revealRoot.classList.contains("mv-anim") && "IntersectionObserver" in window
   window.__mvReveal = true;
 
   const revealSelector = [
-    // Kẻ dòng tiêu đề
-    ".section-head",
-    ".prose-section-head",
-    ".album-header",
-    ".directory-head",
-    ".contact-band-head",
     // Ghi từng dòng
     ".post-grid > .post-card",
     ".service-grid > .post-card",
@@ -646,13 +640,9 @@ if (revealRoot.classList.contains("mv-anim") && "IntersectionObserver" in window
     ".metric",
     ".career-Quickfacts li",
     ".footer-main > *",
-    // Đóng dấu (tự quan sát)
+    // Đóng dấu: số tự quan sát, hoặc khung chứa số (không có hiệu ứng riêng)
     ".company-stats td",
-    // Lật trang
-    ".company-photo img",
-    ".strip-photo",
-    ".activity-photo",
-    ".cards > .card",
+    ".prose-section-head",
     ".band-panel",
   ].join(",");
 

@@ -3329,7 +3329,6 @@ select {
 
 :root {
   --mv-rise: 13px;
-  --mv-turn: -15deg;
   --mv-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
   --mv-pen: cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -3337,71 +3336,10 @@ select {
 @media (max-width: 767px) {
   :root {
     --mv-rise: 7px;
-    --mv-turn: -7deg;
   }
 }
 
-.prose-section-head,
-.album-header,
-.directory-head,
-.contact-band-head {
-  position: relative;
-}
-
-/* Hiệu ứng lật trang không được gây cuộn ngang trong lúc chạy */
-.mv-anim main,
-.mv-anim .site-footer {
-  overflow-x: clip;
-}
-
-/* 1. Kẻ dòng: đường kẻ tự vẽ từ trái sang phải, vạch đỏ hiện sau, chữ trượt lên */
-.mv-anim :is(.section-head, .prose-section-head, .album-header) {
-  border-top-color: transparent;
-}
-
-.mv-anim :is(.section-head, .prose-section-head, .album-header)::after {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--line-strong);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.66s var(--mv-pen) var(--mv-d, 0ms);
-}
-
-.mv-anim .section-head::before {
-  z-index: 1;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.35s var(--mv-ease) calc(var(--mv-d, 0ms) + 0.42s);
-}
-
-.mv-anim :is(.section-head, .prose-section-head, .album-header).is-in::after,
-.mv-anim .section-head.is-in::before {
-  transform: scaleX(1);
-}
-
-.mv-anim :is(.section-head, .prose-section-head, .album-header, .directory-head, .contact-band-head) > * {
-  opacity: 0;
-  transform: translate3d(0, var(--mv-rise), 0);
-  transition:
-    opacity 0.5s ease calc(var(--mv-d, 0ms) + 0.18s),
-    transform 0.63s var(--mv-ease) calc(var(--mv-d, 0ms) + 0.18s);
-}
-
-.mv-anim :is(.section-head, .prose-section-head, .album-header, .directory-head, .contact-band-head) > :nth-child(2) {
-  transition-delay: calc(var(--mv-d, 0ms) + 0.28s);
-}
-
-.mv-anim :is(.section-head, .prose-section-head, .album-header, .directory-head, .contact-band-head).is-in > * {
-  opacity: 1;
-  transform: none;
-}
-
-/* 2. Ghi từng dòng: dòng hiện dần từ trái sang phải như ngòi bút đang ghi */
+/* 1. Ghi từng dòng: dòng hiện dần từ trái sang phải như ngòi bút đang ghi */
 .mv-anim
   :is(
     .post-grid > .post-card,
@@ -3457,7 +3395,7 @@ select {
   transform: none;
 }
 
-/* 3. Đóng dấu: số liệu đập xuống, nảy nhẹ rồi đứng yên */
+/* 2. Đóng dấu: số liệu đập xuống, nảy nhẹ rồi đứng yên */
 @keyframes mv-stamp {
   0% {
     opacity: 0;
@@ -3488,21 +3426,6 @@ select {
 
 .mv-anim .company-stats td {
   transform-origin: 100% 50%;
-}
-
-/* 4. Lật trang: ảnh và thẻ lớn mở ra từ gáy bên trái */
-.mv-anim :is(.company-photo img, .strip-photo, .activity-photo, .cards > .card, .band-panel) {
-  opacity: 0;
-  transform: perspective(1400px) rotateY(var(--mv-turn)) translate3d(0, var(--mv-rise), 0);
-  transform-origin: 0% 50%;
-  transition:
-    opacity 0.56s ease var(--mv-d, 0ms),
-    transform 0.77s var(--mv-ease) var(--mv-d, 0ms);
-}
-
-.mv-anim :is(.company-photo img, .strip-photo, .activity-photo, .cards > .card, .band-panel).is-in {
-  opacity: 1;
-  transform: none;
 }
 
 @media print {
