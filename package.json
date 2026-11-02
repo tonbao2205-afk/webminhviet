@@ -1,0 +1,9 @@
+{
+  "name": "minh-viet-company-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "check": "node src/validate.mjs"
+  }
+}

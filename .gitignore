@@ -1,0 +1,17 @@
+# Bản cũ và gói ZIP triển khai (không đưa lên repo)
+/v15/
+/*.zip
+
+# Cấu hình cục bộ của Claude Code
+/.claude/
+
+# dist/ được build lại từ src/; chỉ giữ ảnh gốc (build không tạo ảnh)
+/dist/*
+!/dist/assets/
+/dist/assets/*
+!/dist/assets/*.webp
+!/dist/assets/hoat-dong/
+
+node_modules/
+.DS_Store
+Thumbs.db
