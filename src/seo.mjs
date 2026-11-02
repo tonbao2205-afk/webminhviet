@@ -40,8 +40,8 @@ export const titles = {
   "gioi-thieu.html": "Giới thiệu Công ty TNHH Tư vấn & Đào tạo Minh Việt | Hà Nội",
   "dich-vu.html": "Hệ thống 18 Dịch vụ Kế toán, Thuế & Pháp lý | Minh Việt",
   "dich-vu/dang-ky-doanh-nghiep.html": "Dịch vụ Đăng ký Doanh nghiệp & Pháp lý tại Hà Nội | Minh Việt",
-  "dich-vu/ke-toan-va-thue.html": "Phân hệ Dịch vụ Kế toán, Kê khai & Quyết toán Thuế | Minh Việt",
-  "dich-vu/tu-van-tai-chinh-doanh-nghiep.html": "Phân hệ Tư vấn Tài chính Doanh nghiệp & Dòng tiền SME | Minh Việt",
+  "dich-vu/ke-toan-va-thue.html": "Dịch vụ Kế toán, Kê khai & Quyết toán Thuế | Minh Việt",
+  "dich-vu/tu-van-tai-chinh-doanh-nghiep.html": "Dịch vụ Tư vấn Tài chính Doanh nghiệp & Dòng tiền SME | Minh Việt",
   "dich-vu/tu-van-quan-ly.html": "Nhóm dịch vụ Tư vấn Quản lý & Vận hành Doanh nghiệp | Minh Việt",
   "dich-vu/dang-ky-doanh-nghiep/thanh-lap-doanh-nghiep.html": "Dịch vụ Thành lập Doanh nghiệp trọn gói tại Hà Nội | Minh Việt",
   "dich-vu/dang-ky-doanh-nghiep/thay-doi-dang-ky-doanh-nghiep.html": "Dịch vụ Thay đổi Đăng ký Kinh doanh Doanh nghiệp | Minh Việt",
@@ -81,15 +81,15 @@ const descriptions = {
   "gioi-thieu.html":
     "Hồ sơ năng lực Công ty TNHH Tư vấn và Đào tạo Minh Việt (MST: 0109123183): 250+ khách hàng thường xuyên, 120+ dự án soát xét và 1.500+ hồ sơ pháp lý.",
   "dich-vu.html":
-    "Tra cứu 18 dịch vụ thuộc 04 phân hệ của Minh Việt tại Hà Nội: Đăng ký doanh nghiệp, Kế toán và thuế, Tư vấn tài chính doanh nghiệp và Tư vấn quản lý.",
+    "Tra cứu 18 dịch vụ thuộc 04 nhóm của Minh Việt tại Hà Nội: Đăng ký doanh nghiệp, Kế toán và thuế, Tư vấn tài chính doanh nghiệp và Tư vấn quản lý.",
   "dich-vu/dang-ky-doanh-nghiep.html":
-    "Phân hệ đăng ký doanh nghiệp tại Hà Nội của Minh Việt: thành lập mới, thay đổi ĐKKD, đổi tên, mua bán, hợp nhất sáp nhập và giải thể đúng quy định.",
+    "Dịch vụ đăng ký doanh nghiệp tại Hà Nội của Minh Việt: thành lập mới, thay đổi ĐKKD, đổi tên, mua bán, hợp nhất sáp nhập và giải thể đúng quy định.",
   "dich-vu/ke-toan-va-thue.html":
-    "Phân hệ dịch vụ kế toán và thuế của Minh Việt tại Hà Nội: thiết lập thuế ban đầu, kế toán trọn gói, làm lại sổ sách, báo cáo tài chính và quyết toán.",
+    "Dịch vụ kế toán và thuế của Minh Việt tại Hà Nội: thiết lập thuế ban đầu, kế toán trọn gói, làm lại sổ sách, báo cáo tài chính và quyết toán.",
   "dich-vu/tu-van-tai-chinh-doanh-nghiep.html":
-    "Phân hệ tư vấn tài chính doanh nghiệp của Minh Việt: phân tích cấu trúc vốn, lập kế hoạch dòng tiền, dự báo ngân sách và đánh giá hiệu quả đầu tư SME.",
+    "Dịch vụ tư vấn tài chính doanh nghiệp của Minh Việt: phân tích cấu trúc vốn, lập kế hoạch dòng tiền, dự báo ngân sách và đánh giá hiệu quả đầu tư SME.",
   "dich-vu/tu-van-quan-ly.html":
-    "Phân hệ tư vấn quản lý doanh nghiệp của Minh Việt tại Hà Nội: tái cấu trúc mô hình tổ chức, chuẩn hóa quy trình phối hợp và xây dựng hệ thống quản trị.",
+    "Dịch vụ tư vấn quản lý doanh nghiệp của Minh Việt tại Hà Nội: tái cấu trúc mô hình tổ chức, chuẩn hóa quy trình phối hợp và xây dựng hệ thống quản trị.",
   "bai-viet.html":
     "Chuyên mục chia sẻ kinh nghiệm thực tiễn về quản lý hồ sơ chứng từ kế toán, thủ tục thuế ban đầu cho doanh nghiệp mới và hệ thống báo cáo quản trị SME.",
   "hinh-anh-hoat-dong/index.html":

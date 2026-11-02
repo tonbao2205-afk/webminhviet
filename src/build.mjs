@@ -279,7 +279,7 @@ function groupCard(group, depth = 0, index = 0) {
   return `
 <article class="card group-card">
   <div class="card-top">
-    <span class="card-no">PHÂN HỆ 0${index + 1}</span>
+    <span class="card-no">NHÓM DỊCH VỤ 0${index + 1}</span>
     <span class="card-count">${String(items.length).padStart(2, "0")} DỊCH VỤ</span>
   </div>
   <div class="card-title-row">
@@ -348,7 +348,7 @@ const featuredPhotos = [
 // Interactive Service Matrix HTML for Homepage
 const interactiveServiceMatrix = `
 <div class="matrix-shell" data-service-matrix>
-  <div class="matrix-nav" role="tablist" aria-label="Bốn phân hệ dịch vụ Minh Việt">
+  <div class="matrix-nav" role="tablist" aria-label="Bốn nhóm dịch vụ Minh Việt">
     ${groups
       .map((g, i) => {
         const items = serviceArticles.filter(a => a.group === g.slug);
@@ -371,11 +371,11 @@ const interactiveServiceMatrix = `
     <section class="matrix-panel${i === 0 ? " is-active" : ""}" id="matrix-panel-${g.slug}" role="tabpanel" aria-labelledby="matrix-tab-${g.slug}" ${i === 0 ? "" : "hidden"}>
       <div class="matrix-panel-head">
         <div>
-          <span class="matrix-panel-kicker">PHÂN HỆ NGHIỆP VỤ 0${i + 1} / 04</span>
+          <span class="matrix-panel-kicker">NHÓM DỊCH VỤ 0${i + 1} / 04</span>
           <h3><a href="dich-vu/${g.slug}.html">${esc(g.title)}</a></h3>
           <p>${esc(g.intro)}</p>
         </div>
-        <a class="button subtle" href="dich-vu/${g.slug}.html"><span>Toàn bộ phân hệ (${items.length})</span>${icons.arrowRight}</a>
+        <a class="button subtle" href="dich-vu/${g.slug}.html"><span>Toàn bộ dịch vụ (${items.length})</span>${icons.arrowRight}</a>
       </div>
       <div class="matrix-service-list">
         ${items
@@ -439,7 +439,7 @@ const home = layout({
         <div class="eyebrow">Hệ thống nghiệp vụ Minh Việt</div>
         <h2>Ma trận 04 nhóm dịch vụ &amp; ${serviceArticles.length} giải pháp chuyên môn</h2>
       </div>
-      <p>Chọn từng phân hệ bên trái để tra cứu ngay phạm vi công việc, số giai đoạn thực hiện và đi thẳng vào hồ sơ chi tiết của từng dịch vụ.</p>
+      <p>Chọn từng dịch vụ bên trái để tra cứu ngay phạm vi công việc, số giai đoạn thực hiện và đi thẳng vào hồ sơ chi tiết của từng dịch vụ.</p>
     </div>
     ${interactiveServiceMatrix}
   </div>
@@ -654,10 +654,10 @@ await save(
     description: "Bốn nhóm dịch vụ: đăng ký doanh nghiệp, kế toán và thuế, tư vấn tài chính doanh nghiệp, tư vấn quản lý.",
     active: "services",
     body: `
-${pageHero(0, "Hệ thống nghiệp vụ", "Chọn nhóm dịch vụ phù hợp với doanh nghiệp", "Mỗi phân hệ dẫn đến các hồ sơ nghiệp vụ chi tiết giới thiệu phạm vi công việc, thông tin cần chuẩn bị và kết quả bàn giao.")}
+${pageHero(0, "Hệ thống nghiệp vụ", "Chọn nhóm dịch vụ phù hợp với doanh nghiệp", "Mỗi nhóm dịch vụ dẫn đến các hồ sơ nghiệp vụ chi tiết giới thiệu phạm vi công việc, thông tin cần chuẩn bị và kết quả bàn giao.")}
 <section class="section soft">
   <div class="wrap">
-    <h2 class="sr-only">Bốn phân hệ dịch vụ trọng tâm</h2>
+    <h2 class="sr-only">Bốn nhóm dịch vụ trọng tâm</h2>
     <div class="cards">${groups.map((g, i) => groupCard(g, 0, i)).join("")}</div>
   </div>
 </section>
@@ -668,14 +668,14 @@ ${pageHero(0, "Hệ thống nghiệp vụ", "Chọn nhóm dịch vụ phù hợp
         <div class="eyebrow">Danh mục đầy đủ</div>
         <h2>Tra cứu nhanh toàn bộ ${serviceArticles.length} dịch vụ chuyên môn</h2>
       </div>
-      <p>Tìm theo tên nghiệp vụ hoặc lọc theo 04 phân hệ chuyên môn của Minh Việt.</p>
+      <p>Tìm theo tên nghiệp vụ hoặc lọc theo 04 nhóm dịch vụ chuyên môn của Minh Việt.</p>
     </div>
     <search class="finder-bar" aria-label="Bộ lọc tra cứu dịch vụ">
       <div class="finder-search">
         ${icons.search}
         <input type="search" id="service-search-input" placeholder="Nhập từ khóa nghiệp vụ (VD: quyết toán, thành lập, dòng tiền, hóa đơn...)" aria-label="Tìm kiếm dịch vụ">
       </div>
-      <div class="finder-filters" role="group" aria-label="Lọc theo phân hệ">
+      <div class="finder-filters" role="group" aria-label="Lọc theo nhóm dịch vụ">
         <button class="finder-filter is-active" type="button" data-filter-group="all">Tất cả (${serviceArticles.length})</button>
         ${groups
           .map(g => {
@@ -689,7 +689,7 @@ ${pageHero(0, "Hệ thống nghiệp vụ", "Chọn nhóm dịch vụ phù hợp
       ${groups
         .map((g, gIdx) => {
           const items = serviceArticles.filter(a => a.group === g.slug);
-          return `<div class="directory-block" data-directory-group="${g.slug}"><div class="directory-head"><div><span class="directory-idx">PHÂN HỆ 0${gIdx + 1}</span><h3><a href="dich-vu/${g.slug}.html">${esc(g.title)}</a></h3></div><span>${items.length} DỊCH VỤ CHUYÊN SÂU</span></div><div class="service-grid">${items.map((a, idx) => detailCard(a, 0, idx)).join("")}</div></div>`;
+          return `<div class="directory-block" data-directory-group="${g.slug}"><div class="directory-head"><div><span class="directory-idx">NHÓM DỊCH VỤ 0${gIdx + 1}</span><h3><a href="dich-vu/${g.slug}.html">${esc(g.title)}</a></h3></div><span>${items.length} DỊCH VỤ CHUYÊN SÂU</span></div><div class="service-grid">${items.map((a, idx) => detailCard(a, 0, idx)).join("")}</div></div>`;
         })
         .join("")}
     </div>
@@ -709,7 +709,7 @@ for (const group of groups) {
       active: "services",
       depth: 1,
       body: `
-${pageHero(1, "Phân hệ dịch vụ", group.title, group.intro)}
+${pageHero(1, "Nhóm dịch vụ", group.title, group.intro)}
 <nav class="group-tabs wrap" aria-label="Chuyển nhanh nhóm dịch vụ">
   ${groups.map((g, idx) => `<a class="group-tab${g.slug === group.slug ? " current" : ""}" href="${g.slug}.html">0${idx + 1}. ${esc(g.title)}</a>`).join("")}
 </nav>
@@ -889,7 +889,7 @@ ${pageHero(1, "Tuyển dụng nhân sự", "Cùng làm việc tại Minh Việt"
     <div class="career-grid">
       <article class="post-card career-card">
         <div class="service-card-head">
-          <span class="post-meta">PHÂN HỆ KẾ TOÁN &amp; THUẾ</span>
+          <span class="post-meta">DỊCH VỤ KẾ TOÁN &amp; THUẾ</span>
           <span class="stage-count">HÀ NỘI</span>
         </div>
         <h3><a href="${careerSlug}.html">Nhân viên Kế toán</a></h3>
