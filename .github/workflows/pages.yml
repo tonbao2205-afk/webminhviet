@@ -34,7 +34,8 @@ jobs:
 
       # Bản thử nghiệm trên tên miền tạm: chặn Google lập chỉ mục để không trùng với thueminhviet.vn
       - name: Chặn lập chỉ mục bản thử nghiệm
-        run: printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
 
       - uses: actions/configure-pages@v5
 
