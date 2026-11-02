@@ -612,39 +612,17 @@ if (albumTabsList) {
 }
 
 // =========================================================
-// 8. HIỆU ỨNG "GHI SỔ" — nội dung xuất hiện khi cuộn tới
+// 8. HIỆU ỨNG XUẤT HIỆN THEO MỤC LỚN KHI CUỘN TỚI
 // Lớp .mv-anim được bật sẵn trong <head> (trừ khi người dùng giảm chuyển động),
 // nên phần tử ẩn ngay từ khung hình đầu, không bị chớp. Danh sách bộ chọn phải
-// khớp với phần "GHI SỔ" trong styles.css.
+// khớp với phần tương ứng trong styles.css.
 // =========================================================
 const revealRoot = document.documentElement;
 if (revealRoot.classList.contains("mv-anim") && "IntersectionObserver" in window) {
   window.__mvReveal = true;
 
-  const revealSelector = [
-    // Ghi từng dòng
-    ".post-grid > .post-card",
-    ".service-grid > .post-card",
-    ".career-grid > .post-card",
-    ".matrix-service-item",
-    ".card-sublist li",
-    ".prose-list li",
-    ".band-points li",
-    ".legal-facts > div",
-    ".job-facts > div",
-    ".contact-ledger > div",
-    ".journey-item",
-    ".lifecycle-card",
-    ".contact-step",
-    ".task-card",
-    ".metric",
-    ".career-Quickfacts li",
-    ".footer-main > *",
-    // Đóng dấu: số tự quan sát, hoặc khung chứa số (không có hiệu ứng riêng)
-    ".company-stats td",
-    ".prose-section-head",
-    ".band-panel",
-  ].join(",");
+  // Chỉ các mục lớn (con trực tiếp của <main>), trừ phần đầu trang
+  const revealSelector = "main > :not(.hero):not(.page-hero)";
 
   const STAGGER_MS = 56;
   const STAGGER_MAX = 6;

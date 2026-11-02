@@ -3322,7 +3322,7 @@ select {
 }
 
 /* ==========================================================================
-   HIỆU ỨNG "GHI SỔ" — xuất hiện khi cuộn tới
+   HIỆU ỨNG XUẤT HIỆN THEO MỤC LỚN KHI CUỘN TỚI
    Chỉ có hiệu lực khi <html> có .mv-anim (bật trong <head>, tắt nếu giảm chuyển động).
    site.js thêm .is-in và độ trễ --mv-d. Danh sách bộ chọn khớp với site.js mục 8.
    ========================================================================== */
@@ -3330,7 +3330,6 @@ select {
 :root {
   --mv-rise: 13px;
   --mv-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
-  --mv-pen: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @media (max-width: 767px) {
@@ -3339,93 +3338,19 @@ select {
   }
 }
 
-/* 1. Ghi từng dòng: dòng hiện dần từ trái sang phải như ngòi bút đang ghi */
-.mv-anim
-  :is(
-    .post-grid > .post-card,
-    .service-grid > .post-card,
-    .career-grid > .post-card,
-    .matrix-service-item,
-    .card-sublist li,
-    .prose-list li,
-    .band-points li,
-    .legal-facts > div,
-    .job-facts > div,
-    .contact-ledger > div,
-    .journey-item,
-    .lifecycle-card,
-    .contact-step,
-    .task-card,
-    .metric,
-    .career-Quickfacts li,
-    .footer-main > *
-  ) {
+/* Mỗi mục lớn hiện một lần khi cuộn tới; toàn bộ nội dung bên trong hiện cùng lúc.
+   Phần đầu trang (Hero trang chủ, tiêu đề trang con) không áp dụng. */
+.mv-anim main > :not(.hero, .page-hero) {
   opacity: 0;
-  clip-path: inset(0 100% 0 0);
-  transform: translate3d(0, calc(var(--mv-rise) * 0.5), 0);
+  transform: translate3d(0, var(--mv-rise), 0);
   transition:
-    clip-path 0.7s var(--mv-pen) var(--mv-d, 0ms),
-    opacity 0.32s ease var(--mv-d, 0ms),
-    transform 0.63s var(--mv-ease) var(--mv-d, 0ms);
+    opacity 0.6s ease var(--mv-d, 0ms),
+    transform 0.7s var(--mv-ease) var(--mv-d, 0ms);
 }
 
-.mv-anim
-  :is(
-    .post-grid > .post-card,
-    .service-grid > .post-card,
-    .career-grid > .post-card,
-    .matrix-service-item,
-    .card-sublist li,
-    .prose-list li,
-    .band-points li,
-    .legal-facts > div,
-    .job-facts > div,
-    .contact-ledger > div,
-    .journey-item,
-    .lifecycle-card,
-    .contact-step,
-    .task-card,
-    .metric,
-    .career-Quickfacts li,
-    .footer-main > *
-  ).is-in {
+.mv-anim main > .is-in {
   opacity: 1;
-  /* Lề âm để không cắt viền focus sau khi hiện xong */
-  clip-path: inset(-12px -12px -12px -12px);
   transform: none;
-}
-
-/* 2. Đóng dấu: số liệu đập xuống, nảy nhẹ rồi đứng yên */
-@keyframes mv-stamp {
-  0% {
-    opacity: 0;
-    transform: scale(1.38) rotate(-3.5deg);
-  }
-  55% {
-    opacity: 1;
-    transform: scale(0.965) rotate(0.56deg);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.mv-anim :is(.metric dd, .journey-badge, .fact-highlight dd, .band-hotline strong, .company-stats td),
-.mv-anim .prose-section-head > .prose-sec-no {
-  opacity: 0;
-  transform: none;
-  transition: none;
-}
-
-.mv-anim .is-in :is(.metric dd, .journey-badge, .fact-highlight dd, .band-hotline strong),
-.mv-anim .company-stats td.is-in,
-.mv-anim .prose-section-head.is-in > .prose-sec-no {
-  animation: mv-stamp 0.5s var(--mv-ease) calc(var(--mv-d, 0ms) + 0.25s) both;
-}
-
-.mv-anim .company-stats td {
-  transform-origin: 100% 50%;
 }
 
 @media print {
