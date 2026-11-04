@@ -11,6 +11,7 @@
 /dist/assets/*
 !/dist/assets/*.webp
 !/dist/assets/hoat-dong/
+!/dist/assets/trang/
 
 node_modules/
 .DS_Store

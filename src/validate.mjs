@@ -2,6 +2,8 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { dirname, join, normalize, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { indexable, canonical } from "./seo.mjs";
+import { activityAlbums } from "./gallery-content.mjs";
+import { pagePhotos } from "./page-photos.mjs";
 
 const root = fileURLToPath(new URL("../dist", import.meta.url));
 const allowedImages = new Set([
@@ -17,6 +19,9 @@ const allowedImages = new Set([
   "assets/hoat-dong/chuc-tet-co-so-2.webp",
   "assets/hoat-dong/khai-truong-co-so-2.webp",
 ]);
+// Ảnh album khai báo trong gallery-content.mjs và ảnh theo trang trong page-photos.mjs
+for (const album of activityAlbums) for (const photo of album.photos) allowedImages.add(`assets/hoat-dong/${photo.file}`);
+for (const photos of Object.values(pagePhotos)) for (const photo of photos) allowedImages.add(`assets/trang/${photo.file}`);
 
 const decode = text =>
   String(text || "")

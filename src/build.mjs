@@ -6,6 +6,7 @@ import { company, posts } from "./site-data.mjs";
 import { groups, serviceArticles } from "./service-content.mjs";
 import { companyProfile } from "./company-content.mjs";
 import { activityAlbums } from "./gallery-content.mjs";
+import { pagePhotos } from "./page-photos.mjs";
 import { careerProfile } from "./career-content.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -252,7 +253,7 @@ const logoFilterSvg = `<svg width="0" height="0" style="position:absolute;width:
 
 function layout({ title, description, active, depth = 0, body }) {
   const p = prefixFor(depth);
-  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><script>try{const s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark")document.querySelector('meta[name="color-scheme"]').content=s}catch{}</script><script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("mv-anim");setTimeout(function(){if(!window.__mvReveal)d.classList.remove("mv-anim")},4000)}}catch(e){}</script><title>${esc(title)} | Minh Việt</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#8d1422" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121621" media="(prefers-color-scheme: dark)"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="${p}favicon.svg"><style>:root{--mv-logo-dark-filter:url(#mv-logo-dark);--mv-logo-knockout-filter:url(#mv-logo-knockout)}</style><link rel="stylesheet" href="${p}assets/styles.css?v=67"></head><body>${logoFilterSvg}<a class="skip" href="#noi-dung">Chuyển đến nội dung chính</a>${header(depth, active)}<main id="noi-dung">${body}</main>${footer(depth)}<script defer src="${p}assets/site.js?v=67"></script></body></html>`;
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><script>try{const s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark")document.querySelector('meta[name="color-scheme"]').content=s}catch{}</script><script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("mv-anim");setTimeout(function(){if(!window.__mvReveal)d.classList.remove("mv-anim")},4000)}}catch(e){}</script><title>${esc(title)} | Minh Việt</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#8d1422" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121621" media="(prefers-color-scheme: dark)"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="${p}favicon.svg"><style>:root{--mv-logo-dark-filter:url(#mv-logo-dark);--mv-logo-knockout-filter:url(#mv-logo-knockout)}</style><link rel="stylesheet" href="${p}assets/styles.css?v=68"></head><body>${logoFilterSvg}<a class="skip" href="#noi-dung">Chuyển đến nội dung chính</a>${header(depth, active)}<main id="noi-dung">${body}</main>${footer(depth)}<script defer src="${p}assets/site.js?v=68"></script></body></html>`;
 }
 
 function pageHero(depth, eyebrow, title, intro) {
@@ -338,12 +339,38 @@ async function save(relative, content, meta) {
 }
 
 const ecosystem = companyProfile.tables[1].slice(1);
+const albumPhoto = photo => ({ ...photo, src: `assets/hoat-dong/${photo.file}` });
+const pagePhoto = photo => ({ ...photo, src: `assets/trang/${photo.file}` });
 const featuredPhotos = [
-  activityAlbums[4].photos[0], // khai-truong-co-so-2.jpg
-  activityAlbums[0].photos[0], // du-lich-he-2026.jpg
-  activityAlbums[2].photos[0], // quoc-khanh-01.jpg
-  activityAlbums[1].photos[1], // sinh-nhat-quy.jpg
+  pagePhoto(pagePhotos["trang-chu"][0]), // ảnh tập thể trước văn phòng (ô lớn)
+  albumPhoto(activityAlbums[4].photos[0]), // khai-truong-co-so-2
+  pagePhoto(pagePhotos["trang-chu"][1]), // nâng ly chúc mừng
+  albumPhoto(activityAlbums[0].photos[0]), // du-lich-he-2026 (ô ngang)
 ];
+
+// Dải ảnh theo trang: tiêu đề + hàng ảnh giữ đúng tỉ lệ gốc
+function photoBand({ eyebrow, title, photos, depth = 0, wide = false }) {
+  const p = prefixFor(depth);
+  return `
+<section class="section photo-band${wide ? " photo-band--wide" : ""}">
+  <div class="wrap photo-band-grid">
+    <div class="photo-band-head">
+      <div class="eyebrow">${esc(eyebrow)}</div>
+      <h2>${esc(title)}</h2>
+    </div>
+    <div class="photo-row">${photos
+      .map(
+        photo => `
+      <figure class="photo-cell${photo.height > photo.width ? " is-portrait" : ""}" style="--ar: ${photo.width} / ${photo.height}; --grow: ${(photo.width / photo.height).toFixed(3)}">
+        <img src="${p}assets/trang/${photo.file}" alt="${esc(photo.caption)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">
+        <figcaption>${esc(photo.caption)}</figcaption>
+      </figure>`
+      )
+      .join("")}
+    </div>
+  </div>
+</section>`;
+}
 
 // Interactive Service Matrix HTML for Homepage
 const interactiveServiceMatrix = `
@@ -504,7 +531,7 @@ const home = layout({
           (photo, idx) => `
       <figure class="strip-photo">
         <a href="hinh-anh-hoat-dong/index.html">
-          <img src="assets/hoat-dong/${photo.file}" alt="${esc(photo.caption)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">
+          <img src="${photo.src}" alt="${esc(photo.caption)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">
         </a>
         <figcaption>${esc(photo.caption)}</figcaption>
       </figure>`
@@ -512,7 +539,7 @@ const home = layout({
         .join("")}
     </div>
     <div class="section-foot">
-      <a class="button subtle" href="hinh-anh-hoat-dong/index.html"><span>Xem toàn bộ 05 album hoạt động</span>${icons.arrowRight}</a>
+      <a class="button subtle" href="hinh-anh-hoat-dong/index.html"><span>Xem toàn bộ ${String(activityAlbums.length).padStart(2, "0")} album hoạt động</span>${icons.arrowRight}</a>
     </div>
   </div>
 </section>
@@ -643,6 +670,7 @@ await save(
     </article>
   </div>
 </section>
+${photoBand({ eyebrow: "Đội ngũ Minh Việt", title: "Con người tại Minh Việt", photos: pagePhotos["gioi-thieu"], wide: true })}
 ${ctaBand(0)}`,
   })
 );
@@ -695,6 +723,7 @@ ${pageHero(0, "Hệ thống nghiệp vụ", "Chọn nhóm dịch vụ phù hợp
     </div>
   </div>
 </section>
+${photoBand({ eyebrow: "Đội ngũ tư vấn", title: "Chuyên viên đồng hành cùng doanh nghiệp", photos: pagePhotos["dich-vu"] })}
 ${ctaBand(0, "Cần làm rõ phạm vi hỗ trợ?", "Minh Việt sẽ trao đổi về nhu cầu và xác định công việc phù hợp.")}`,
   })
 );
@@ -903,7 +932,8 @@ ${pageHero(1, "Tuyển dụng nhân sự", "Cùng làm việc tại Minh Việt"
     </div>
     <p class="career-note">Thông tin vị trí được biên tập từ bản mô tả công việc do Minh Việt cung cấp. Vui lòng liên hệ để xác nhận thời gian tiếp nhận hồ sơ.</p>
   </div>
-</section>`,
+</section>
+${photoBand({ eyebrow: "Môi trường làm việc", title: "Đội ngũ và hoạt động nhân sự", photos: pagePhotos["tuyen-dung"], depth: 1, wide: true })}`,
   })
 );
 
@@ -1075,7 +1105,8 @@ ${pageHero(0, "Hồ sơ pháp lý & Kênh tiếp nhận chính thức", "Thông 
       </div>
     </section>
   </div>
-</section>`,
+</section>
+${photoBand({ eyebrow: "Văn phòng Minh Việt", title: "Không gian làm việc tại văn phòng", photos: pagePhotos["lien-he"] })}`,
   })
 );
 
@@ -1123,7 +1154,7 @@ ${pageHero(1, "Tư liệu văn hóa & đội ngũ", "Hình ảnh hoạt động"
       ${album.photos
         .map(
           photo => `
-      <figure class="activity-photo">
+      <figure class="activity-photo${photo.height > photo.width ? " is-portrait" : ""}">
         <a class="lightbox-trigger" href="../assets/hoat-dong/${photo.file}" target="_blank" rel="noopener noreferrer" aria-label="Xem ảnh lớn: ${esc(photo.caption)}" data-caption="${esc(photo.caption)}">
           <img src="../assets/hoat-dong/${photo.file}" alt="${esc(photo.caption)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">
           <span class="photo-zoom-hint">PHÓNG TO TƯ LIỆU</span>

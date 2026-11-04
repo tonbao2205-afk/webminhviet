@@ -24,6 +24,8 @@ Tài liệu này quy định các nguyên tắc bắt buộc khi phát triển, 
      - `assets/hoat-dong/quoc-khanh-02.webp` (`2048×1365`)
      - `assets/hoat-dong/chuc-tet-co-so-2.webp` (`2048×1536`)
      - `assets/hoat-dong/khai-truong-co-so-2.webp` (`1280×853`)
+   - 6 ảnh album "Sinh nhật quý 3 & gặp mặt tại văn phòng" trong `assets/hoat-dong/` (khai báo tại `src/gallery-content.mjs`).
+   - 12 ảnh theo trang trong `assets/trang/<trang-chu|gioi-thieu|dich-vu|tuyen-dung|lien-he>/` (khai báo tại `src/page-photos.mjs`). Bản gốc khách gửi nằm ở thư mục `Ảnh Hoạt Động/`.
 3. **Trang trí giao diện không dùng ảnh ngoài:**
    - Mọi biểu tượng minh họa cho nhóm dịch vụ, quy trình, thông tin liên hệ hoặc chỉ số năng lực chỉ được phép dùng **Inline SVG**, **CSS thuần** (gradients, borders, badges) hoặc **Typography**.
    - Luôn khai báo đầy đủ `width`, `height`, `alt`, `loading="lazy"` (hoặc `fetchpriority="high"` cho ảnh Hero chính) để tránh nhảy bố cục (CLS = 0).
@@ -37,7 +39,8 @@ Tài liệu này quy định các nguyên tắc bắt buộc khi phát triển, 
    - 4 nhóm dịch vụ & 18 trang dịch vụ chi tiết: `src/service-content.mjs`
    - Hồ sơ giới thiệu công ty & hệ sinh thái vòng đời doanh nghiệp: `src/company-content.mjs`
    - Thông tin tuyển dụng vị trí Nhân viên Kế toán: `src/career-content.mjs`
-   - Danh mục 5 album hình ảnh hoạt động: `src/gallery-content.mjs`
+   - Danh mục 6 album hình ảnh hoạt động: `src/gallery-content.mjs`
+   - Ảnh theo từng trang (giới thiệu, dịch vụ, tuyển dụng, liên hệ, trang chủ): `src/page-photos.mjs`, tệp nằm trong `dist/assets/trang/`
    - Cấu hình SEO, Open Graph, Canonical & Schema.org JSON-LD: `src/seo.mjs`
 2. **Bảo toàn tính chính xác nghiệp vụ:**
    - Không tự ý bịa đặt số liệu, địa chỉ, giá dịch vụ hoặc thay đổi nội dung chuyên môn kế toán – thuế – pháp lý – tài chính.

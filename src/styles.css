@@ -1726,6 +1726,78 @@ select {
 }
 
 /* ==========================================================================
+   DẢI ẢNH THEO TRANG (giới thiệu, dịch vụ, tuyển dụng, liên hệ)
+   ========================================================================== */
+
+.photo-band-grid {
+  display: grid;
+  gap: 28px;
+}
+
+.photo-band-head h2 {
+  margin: 0;
+}
+
+.photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.photo-cell {
+  flex: 1 1 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.photo-cell.is-portrait {
+  flex-basis: calc(50% - 6px);
+}
+
+.photo-cell img {
+  width: 100%;
+  height: auto;
+  max-height: 75vh;
+  aspect-ratio: var(--ar);
+  object-fit: cover;
+  object-position: 50% 30%;
+  background: var(--bg-deep);
+}
+
+.photo-cell figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+@media (min-width: 700px) {
+  .photo-row {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Bề rộng tỉ lệ với khung ảnh để cả hàng cao bằng nhau */
+  .photo-cell,
+  .photo-cell.is-portrait {
+    flex: var(--grow) 1 0%;
+  }
+
+  .photo-cell img {
+    max-height: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .photo-band:not(.photo-band--wide) .photo-band-grid {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    align-items: start;
+    gap: 56px;
+  }
+}
+
+/* ==========================================================================
    DẢI KẾT NỐI TƯ VẤN (CTA)
    ========================================================================== */
 
@@ -3022,6 +3094,10 @@ select {
   aspect-ratio: 3 / 2;
   object-fit: cover;
   transition: transform 0.4s ease;
+}
+
+.activity-photo.is-portrait img {
+  object-position: 50% 30%;
 }
 
 .photo-zoom-hint {
