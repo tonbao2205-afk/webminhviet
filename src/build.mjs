@@ -253,7 +253,7 @@ const logoFilterSvg = `<svg width="0" height="0" style="position:absolute;width:
 
 function layout({ title, description, active, depth = 0, body }) {
   const p = prefixFor(depth);
-  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><script>try{const s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark")document.querySelector('meta[name="color-scheme"]').content=s}catch{}</script><script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("mv-anim");setTimeout(function(){if(!window.__mvReveal)d.classList.remove("mv-anim")},4000)}}catch(e){}</script><title>${esc(title)} | Minh Việt</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#8d1422" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121621" media="(prefers-color-scheme: dark)"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="${p}favicon.svg"><style>:root{--mv-logo-dark-filter:url(#mv-logo-dark);--mv-logo-knockout-filter:url(#mv-logo-knockout)}</style><link rel="stylesheet" href="${p}assets/styles.css?v=68"></head><body>${logoFilterSvg}<a class="skip" href="#noi-dung">Chuyển đến nội dung chính</a>${header(depth, active)}<main id="noi-dung">${body}</main>${footer(depth)}<script defer src="${p}assets/site.js?v=68"></script></body></html>`;
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><script>try{const s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark")document.querySelector('meta[name="color-scheme"]').content=s}catch{}</script><script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("mv-anim");setTimeout(function(){if(!window.__mvReveal)d.classList.remove("mv-anim")},4000)}}catch(e){}</script><title>${esc(title)} | Minh Việt</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#8d1422" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121621" media="(prefers-color-scheme: dark)"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet"><link rel="icon" type="image/svg+xml" href="${p}favicon.svg"><style>:root{--mv-logo-dark-filter:url(#mv-logo-dark);--mv-logo-knockout-filter:url(#mv-logo-knockout)}</style><link rel="stylesheet" href="${p}assets/styles.css?v=69"></head><body>${logoFilterSvg}<a class="skip" href="#noi-dung">Chuyển đến nội dung chính</a>${header(depth, active)}<main id="noi-dung">${body}</main>${footer(depth)}<script defer src="${p}assets/site.js?v=69"></script></body></html>`;
 }
 
 function pageHero(depth, eyebrow, title, intro) {
@@ -316,7 +316,10 @@ function detailCard(article, depth = 1, index = 0) {
 
 function postCard(post, depth = 0, index = 0) {
   const p = prefixFor(depth);
-  return `<article class="post-card"><div class="post-meta">${esc(post.category)}</div><h3><a href="${p}bai-viet/${post.slug}.html">${esc(post.title)}</a></h3><p>${esc(post.excerpt)}</p><a class="more" href="${p}bai-viet/${post.slug}.html">Đọc bài viết</a></article>`;
+  const cover = post.image
+    ? `<figure class="post-cover${post.image.height > post.image.width ? " is-portrait" : ""}"><img src="${p}${post.image.src}" alt="${esc(post.image.alt)}" width="${post.image.width}" height="${post.image.height}" loading="lazy" decoding="async"></figure>`
+    : "";
+  return `<article class="post-card">${cover}<div class="post-meta">${esc(post.category)}</div><h3><a href="${p}bai-viet/${post.slug}.html">${esc(post.title)}</a></h3><p>${esc(post.excerpt)}</p><a class="more" href="${p}bai-viet/${post.slug}.html">Đọc bài viết</a></article>`;
 }
 
 function renderSections(sections, startIdx = 2) {
@@ -343,7 +346,7 @@ const albumPhoto = photo => ({ ...photo, src: `assets/hoat-dong/${photo.file}` }
 const pagePhoto = photo => ({ ...photo, src: `assets/trang/${photo.file}` });
 const featuredPhotos = [
   pagePhoto(pagePhotos["trang-chu"][0]), // ảnh tập thể trước văn phòng (ô lớn)
-  albumPhoto(activityAlbums[4].photos[0]), // khai-truong-co-so-2
+  albumPhoto(activityAlbums[2].photos[0]), // quoc-khanh-01 (khai-truong-co-so-2 trùng file với ảnh hero nên không dùng ở đây)
   pagePhoto(pagePhotos["trang-chu"][1]), // nâng ly chúc mừng
   albumPhoto(activityAlbums[0].photos[0]), // du-lich-he-2026 (ô ngang)
 ];
@@ -512,7 +515,10 @@ const home = layout({
       </div>
       <p>Đúc kết từ các tình huống thực tế doanh nghiệp nhỏ và vừa thường gặp trong tổ chức hồ sơ kế toán, thuế và điều hành tài chính.</p>
     </div>
-    <div class="post-grid">${posts.map((p, i) => postCard(p, 0, i)).join("")}</div>
+    <div class="post-grid">${posts.slice(0, 3).map((p, i) => postCard(p, 0, i)).join("")}</div>
+    <div class="section-foot">
+      <a class="button subtle" href="bai-viet.html"><span>Xem toàn bộ ${posts.length} bài viết</span>${icons.arrowRight}</a>
+    </div>
   </div>
 </section>
 
@@ -877,6 +883,11 @@ for (const post of posts) {
 </section>
 <section class="section">
   <article class="article wrap">
+    ${
+      post.image
+        ? `<figure class="article-cover${post.image.height > post.image.width ? " is-portrait" : ""}"><img src="../${post.image.src}" alt="${esc(post.image.alt)}" width="${post.image.width}" height="${post.image.height}" fetchpriority="high" decoding="async"><figcaption>${esc(post.image.alt)}</figcaption></figure>`
+        : ""
+    }
     ${post.paragraphs.map(([h, p]) => `<h2>${esc(h)}</h2><p>${esc(p)}</p>`).join("")}
     <div class="quote">Doanh nghiệp nên điều chỉnh cách áp dụng theo quy mô, ngành nghề và tình hình thực tế của mình.</div>
     <p><strong>Lưu ý:</strong> Bài viết cung cấp thông tin tham khảo về quản trị và tổ chức công việc. Với vấn đề cụ thể, doanh nghiệp nên trao đổi trực tiếp với người có chuyên môn.</p>

@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 import { indexable, canonical } from "./seo.mjs";
 import { activityAlbums } from "./gallery-content.mjs";
 import { pagePhotos } from "./page-photos.mjs";
+import { posts } from "./site-data.mjs";
+import { createHash } from "node:crypto";
 
 const root = fileURLToPath(new URL("../dist", import.meta.url));
 const allowedImages = new Set([
@@ -41,8 +43,31 @@ async function walk(dir) {
 }
 await walk(root);
 
+const hashCache = new Map();
+async function fileHash(path) {
+  if (!hashCache.has(path)) {
+    try {
+      hashCache.set(path, createHash("md5").update(await readFile(path)).digest("hex"));
+    } catch {
+      hashCache.set(path, null);
+    }
+  }
+  return hashCache.get(path);
+}
+
 const missing = [];
 const unapprovedImages = [];
+const duplicateImages = [];
+
+// Mỗi bài viết phải có ảnh bìa riêng, không trùng nội dung với ảnh bìa bài khác
+const coverOwners = new Map();
+for (const post of posts) {
+  if (!post.image) continue;
+  const hash = await fileHash(join(root, post.image.src));
+  if (!hash) continue;
+  if (coverOwners.has(hash)) duplicateImages.push(`Ảnh bìa trùng giữa hai bài viết: ${coverOwners.get(hash)} và ${post.slug}`);
+  else coverOwners.set(hash, post.slug);
+}
 const gscErrors = [];
 const seenTitles = new Map();
 const seenDescs = new Map();
@@ -66,6 +91,7 @@ for (const file of files.filter(path => path.endsWith(".html"))) {
     }
   }
 
+  const pageImageHashes = new Map();
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
     const src = tag.match(/\bsrc="([^"]+)"/i)?.[1] || "";
@@ -84,6 +110,15 @@ for (const file of files.filter(path => path.endsWith(".html"))) {
     const relImg = relative(root, resolved).replaceAll("\\", "/");
     if (!allowedImages.has(relImg)) {
       unapprovedImages.push(`${relFile} -> ảnh không nằm trong danh mục chuẩn: ${relImg}`);
+    }
+    // Cùng một ảnh (so theo nội dung tệp, kể cả khác tên) không được xuất hiện hai lần trên một trang; logo được lặp lại
+    if (relImg === "assets/logo-minh-viet.webp") continue;
+    const hash = await fileHash(resolved);
+    if (!hash) continue;
+    if (pageImageHashes.has(hash)) {
+      duplicateImages.push(`${relFile} -> ảnh trùng lặp trên cùng trang: ${pageImageHashes.get(hash)} và ${relImg}`);
+    } else {
+      pageImageHashes.set(hash, relImg);
     }
   }
 
@@ -212,6 +247,10 @@ if (missing.length) {
 }
 if (unapprovedImages.length) {
   console.error("Vi phạm quy tắc hình ảnh:\n" + unapprovedImages.join("\n"));
+  process.exit(1);
+}
+if (duplicateImages.length) {
+  console.error("Ảnh trùng lặp:\n" + duplicateImages.join("\n"));
   process.exit(1);
 }
 if (gscErrors.length) {

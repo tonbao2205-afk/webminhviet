@@ -232,12 +232,20 @@ export function enhanceHtml(path, source, post) {
   const isAbout = path === "gioi-thieu.html";
   const isArticle = path.startsWith("bai-viet/") && path !== "bai-viet.html";
   const isServiceDetail = /^dich-vu\/[^/]+\/[^/]+\.html$/.test(path);
-  const ogImage = isAbout ? `${origin}/assets/doi-ngu-cong-so.webp` : `${origin}/assets/doi-ngu-minh-viet.webp`;
-  const ogWidth = isAbout ? 2048 : 1280;
-  const ogHeight = isAbout ? 1365 : 853;
-  const ogAlt = isAbout
-    ? "Đội ngũ chuyên viên Công ty TNHH Tư vấn và Đào tạo Minh Việt tại Hà Nội"
-    : "Đội ngũ Công ty TNHH Tư vấn và Đào tạo Minh Việt";
+  // Bài viết có ảnh bìa thì dùng chính ảnh đó khi chia sẻ
+  const cover = isArticle && post?.image;
+  const ogImage = cover
+    ? `${origin}/${post.image.src}`
+    : isAbout
+      ? `${origin}/assets/doi-ngu-cong-so.webp`
+      : `${origin}/assets/doi-ngu-minh-viet.webp`;
+  const ogWidth = cover ? post.image.width : isAbout ? 2048 : 1280;
+  const ogHeight = cover ? post.image.height : isAbout ? 1365 : 853;
+  const ogAlt = cover
+    ? post.image.alt
+    : isAbout
+      ? "Đội ngũ chuyên viên Công ty TNHH Tư vấn và Đào tạo Minh Việt tại Hà Nội"
+      : "Đội ngũ Công ty TNHH Tư vấn và Đào tạo Minh Việt";
 
   const logoObject = {
     "@type": "ImageObject",
